@@ -24,6 +24,10 @@ import SwiftEntryKit
     internal var cardNumber:String = ""
     /// Holds a reference to the prefilling card expiry if  any
     internal var cardExpiry:String = ""
+    /// Holds a reference to the prefilling card cvv if any
+    internal var cardCVV: String = ""
+    /// Holds a reference to the prefilling card holder name if any
+    internal var cardHolderName: String = ""
     /// Defines the base url for the Tap card sdk
     internal static let tapCardBaseUrl:String = "https://sdk.staging.tap.company/v2/card/wrapper?configurations="
     /// Defines the scanner object to be called whenever needed
@@ -195,11 +199,15 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         guard cardNumber.count > 6 else {
             cardNumber = ""
             cardExpiry = ""
+            cardCVV = ""
+            cardHolderName = ""
             return
         }
-        webView?.evaluateJavaScript("window.fillCardInputs({cardNumber: '\(cardNumber)',expiryDate: '\(cardExpiry)',cvv: '',cardHolderName: ''})")
+        webView?.evaluateJavaScript("window.fillCardInputs({cardNumber: '\(cardNumber)',expiryDate: '\(cardExpiry)',cvv: '\(cardCVV)',cardHolderName: '\(cardHolderName)'})")
         cardNumber = ""
         cardExpiry = ""
+        cardCVV = ""
+        cardHolderName = ""
     }
     
     /// Will handle & starte the redirection process when called
@@ -305,12 +313,22 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     ///  - Parameter config: The configurations dctionary. Recommended, as it will make you able to customly add models without updating
     ///  - Parameter delegate:A protocol that allows integrators to get notified from events fired from Tap card sdk
     ///  - Parameter presentScannerIn: We will need a reference to the controller that we can present from the card scanner feature
-    @objc public func initTapCardSDK(configDict: [String : Any], delegate: TapCardViewDelegate? = nil, presentScannerIn:UIViewController? = nil, cardNumber:String = "", cardExpiry:String = "") {
+    @objc public func initTapCardSDK(
+        configDict: [String : Any],
+        delegate: TapCardViewDelegate? = nil,
+        presentScannerIn:UIViewController? = nil,
+        cardNumber:String = "",
+        cardExpiry:String = "",
+        cardCVV:String = "",
+        cardHolderName:String = ""
+    ) {
         
         self.delegate = delegate
         self.presentScannerIn = presentScannerIn ?? self.parentViewController
         self.cardNumber = cardNumber.tap_byRemovingAllCharactersExcept("0123456789")
         self.cardExpiry = cardExpiry.tap_byRemovingAllCharactersExcept("0123456789/")
+        self.cardCVV = cardCVV.tap_byRemovingAllCharactersExcept("0123456789")
+        self.cardHolderName = cardHolderName
         
         var updatedConfigurations:[String:Any] = configDict
         updatedConfigurations["headers"] = generateApplicationHeader()
