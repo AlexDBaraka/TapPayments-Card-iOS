@@ -190,11 +190,12 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
         // Give a moment for the iFrame to be fully rendered
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             self.delegate?.onReady?()
+            self.prefillCardData()
         }
     }
     
     /// Will check if card number and expiry are passed by merchant, will ask the web sdk to fill them in
-    func prefillCardData() {
+    internal func prefillCardData() {
         guard cardNumber.count > 6 else {
             cardNumber = ""
             cardExpiry = ""
