@@ -196,7 +196,7 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     
     /// Will check if card number and expiry are passed by merchant, will ask the web sdk to fill them in
     internal func prefillCardData() {
-        guard cardNumber.count > 6 else {
+        guard cardNumber.count > 9 else {
             cardNumber = ""
             cardExpiry = ""
             cardCVV = ""
