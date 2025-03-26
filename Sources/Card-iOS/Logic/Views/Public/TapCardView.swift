@@ -26,6 +26,10 @@ import SwiftEntryKit
     internal var cardNumber:String = ""
     /// Holds a reference to the prefilling card expiry if  any
     internal var cardExpiry:String = ""
+    /// Holds a reference to the prefilling card cvv if any
+    internal var cardCVV: String = ""
+    /// Holds a reference to the prefilling card holder name if any
+    internal var cardHolderName: String = ""
     /// Defines the base url for the Tap card sdk
     internal static var tapCardBaseUrl:String = "https://sdk.beta.tap.company/v2/card/wrapper?configurations="
     internal static var sandboxKey:String = """
@@ -215,14 +219,18 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     
     /// Will check if card number and expiry are passed by merchant, will ask the web sdk to fill them in
     internal func prefillCardData() {
-        guard cardNumber.count > 6 else {
+        guard cardNumber.count > 9 else {
             cardNumber = ""
             cardExpiry = ""
+            cardCVV = ""
+            cardHolderName = ""
             return
         }
-        webView?.evaluateJavaScript("window.fillCardInputs({cardNumber: '\(cardNumber)',expiryDate: '\(cardExpiry)',cvv: '',cardHolderName: ''})")
+        webView?.evaluateJavaScript("window.fillCardInputs({cardNumber: '\(cardNumber)',expiryDate: '\(cardExpiry)',cvv: '\(cardCVV)',cardHolderName: '\(cardHolderName)'})")
         cardNumber = ""
         cardExpiry = ""
+        cardCVV = ""
+        cardHolderName = ""
     }
     
     /// Will pass the detected IP to the card web sdk
@@ -333,13 +341,15 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     ///  - Parameter config: The configurations dctionary. Recommended, as it will make you able to customly add models without updating
     ///  - Parameter delegate:A protocol that allows integrators to get notified from events fired from Tap card sdk
     ///  - Parameter presentScannerIn: We will need a reference to the controller that we can present from the card scanner feature
-    @objc public func initTapCardSDK(configDict: [String : Any], delegate: TapCardViewDelegate? = nil, presentScannerIn:UIViewController? = nil, cardNumber:String = "", cardExpiry:String = "") {
+    @objc public func initTapCardSDK(configDict: [String : Any], delegate: TapCardViewDelegate? = nil, presentScannerIn:UIViewController? = nil, cardNumber:String = "", cardExpiry:String = "", cardCVV:String = "", cardHolderName:String = "") {
         
         self.delegate = delegate
         self.presentScannerIn = presentScannerIn ?? self.parentViewController
         // Remove any non numerical charachters for passed card number and date
         self.cardNumber = cardNumber.tap_byRemovingAllCharactersExcept("0123456789")
         self.cardExpiry = cardExpiry.tap_byRemovingAllCharactersExcept("0123456789/")
+        self.cardCVV = cardCVV.tap_byRemovingAllCharactersExcept("0123456789")
+        self.cardHolderName = cardHolderName
         
         // We will have to add app related information to the request
         var updatedConfigurations:[String:Any] = configDict
