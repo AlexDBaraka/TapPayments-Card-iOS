@@ -7,12 +7,10 @@
 
 import UIKit
 import WebKit
-import SnapKit
 import SharedDataModels_iOS
 import Foundation
 import TapCardScannerWebWrapper_iOS
 import AVFoundation
-import SwiftEntryKit
 
 /// The custom view that provides an interface for the Tap card sdk form
 @objc public class TapCardView: UIView {
@@ -236,54 +234,6 @@ SZhWp4Mnd6wjVgXAsQIDAQAB
     /// Will pass the detected IP to the card web sdk
     internal func passIP() {
         webView?.evaluateJavaScript("window.setIP('\(detectedIP)')")
-    }
-    
-    /// Will handle & starte the redirection process when called
-    /// - Parameter data: The data string fetched from the url parameter
-    internal func handleRedirection(data:String) {
-        // let us make sure we have the data we need to start such a process
-        guard let cardRedirection:CardRedirection = try? CardRedirection(data),
-              let _:String = cardRedirection.threeDsUrl,
-              let _:String = cardRedirection.redirectUrl else {
-            // This means, there is such an error from the integration with web sdk
-            delegate?.onError?(data: "Failed to start authentication process")
-            return
-        }
-        
-        // This means we are ok to start the authentication process
-        let threeDsView:ThreeDSView = .init(frame: .zero)
-        // Set to web view the needed urls
-        threeDsView.cardRedirectionData = cardRedirection
-        // Set the selected card locale for correct semantic rendering
-        threeDsView.selectedLocale = getCardLocale()
-        // Set to web view what should it when the process is canceled by the user
-        threeDsView.threeDSCanceled = {
-            // reload the card data
-            self.openUrl(url: self.currentlyLoadedCardConfigurations)
-            // inform the merchant
-            self.delegate?.onError?(data: "Payer canceled three ds process")
-            // dismiss the threeds page
-            SwiftEntryKit.dismiss()
-        }
-        // Hide or show the powered by tap based on coming parameter
-        threeDsView.poweredByTapView.isHidden = !(cardRedirection.powered ?? true)
-        // Set to web view what should it when the process is completed by the user
-        threeDsView.redirectionReached = { redirectionUrl in
-            SwiftEntryKit.dismiss {
-                DispatchQueue.main.async {
-                    self.passRedirectionDataToSDK(rediectionUrl: redirectionUrl)
-                }
-            }
-        }
-        // Set to web view what should it do when the content is loaded in the background
-        threeDsView.idleForWhile = {
-            DispatchQueue.main.async {
-                SwiftEntryKit.display(entry: threeDsView, using: threeDsView.swiftEntryAttributes())
-            }
-        }
-        // Tell it to start rendering 3ds content in background
-        threeDsView.startLoading()
-        
     }
     
     /// Tells the web sdk the process is finished with the data from backend

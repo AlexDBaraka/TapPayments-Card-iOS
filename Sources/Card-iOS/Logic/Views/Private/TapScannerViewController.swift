@@ -8,7 +8,6 @@
 import UIKit
 import TapCardScannerWebWrapper_iOS
 import TapCardVlidatorKit_iOS
-import SnapKit
 import SharedDataModels_iOS
 
 /// A protocol to listen to the events fired from the full screen controllr
@@ -43,19 +42,6 @@ internal class TapScannerViewController: UIViewController {
         view.insertSubview(blurView, at: 0)
         
         view.addSubview(previewView)
-        
-        previewView.snp.remakeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview()
-        }
-        
-        blurView.snp.remakeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.top.equalToSuperview()
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-        }
         
         previewView.setNeedsLayout()
         previewView.updateConstraints()

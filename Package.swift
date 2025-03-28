@@ -14,8 +14,6 @@ let package = Package(
     ], 
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/huri000/SwiftEntryKit.git", from: "1.0.0"),
-        .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.0.0"),
         .package(url: "https://github.com/TakeScoop/SwiftyRSA.git", from: "1.0.0"),
         .package(url: "https://github.com/Tap-Payments/SharedDataModels-iOS.git", from: "0.0.1"),
         .package(url: "https://github.com/Tap-Payments/TapCardScannerWebWrapper-iOS.git", exact: "0.0.6"),
@@ -26,9 +24,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "Card-iOS",
-            dependencies: ["SwiftEntryKit",
-                           "SnapKit",
-                           "SwiftyRSA",
+            dependencies: ["SwiftyRSA",
                            "SharedDataModels-iOS",
                            "TapFontKit-iOS",
                            "TapCardScannerWebWrapper-iOS"],
@@ -38,10 +34,7 @@ let package = Package(
             swiftSettings: [
                     .define("SPM")
                   ]
-            ),
-        .testTarget(
-            name: "Card-iOSTests",
-            dependencies: ["Card-iOS"]),
+            )
     ],
     swiftLanguageVersions: [.v5]
 )

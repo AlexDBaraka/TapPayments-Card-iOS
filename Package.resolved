@@ -1,39 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "quicklayout",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/huri000/QuickLayout",
-      "state" : {
-        "revision" : "6be62decbe508d8fc8f9dbafc349d05bab03c38b",
-        "version" : "3.0.1"
-      }
-    },
-    {
       "identity" : "shareddatamodels-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Tap-Payments/SharedDataModels-iOS.git",
       "state" : {
         "revision" : "1dff74525847544e3e155503acd77f35a2022d7c",
         "version" : "0.0.13"
-      }
-    },
-    {
-      "identity" : "snapkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit.git",
-      "state" : {
-        "revision" : "f222cbdf325885926566172f6f5f06af95473158",
-        "version" : "5.6.0"
-      }
-    },
-    {
-      "identity" : "swiftentrykit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/huri000/SwiftEntryKit.git",
-      "state" : {
-        "revision" : "c2d42574e4fe4e1f9719843f35add7922942a16b",
-        "version" : "1.2.7"
       }
     },
     {

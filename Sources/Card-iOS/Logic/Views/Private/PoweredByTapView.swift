@@ -127,48 +127,6 @@ extension PoweredByTapView {
         poweredByTapImageView.translatesAutoresizingMaskIntoConstraints = false
         poweredByTapImageView.tintColor = .white
         
-        blurView.snp.remakeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-        
-        poweredByTapImageView.snp.remakeConstraints { make in
-            make.width.equalTo(112)
-            make.height.equalTo(30)
-            make.top.equalToSuperview().offset(9)
-            make.trailing.equalToSuperview().offset(-16)
-        }
-        
-        
-        backView.snp.remakeConstraints { make in
-            make.width.equalTo(64)
-            make.height.equalTo(20)
-            make.centerY.equalTo(poweredByTapImageView.snp.centerY)
-            make.leading.equalToSuperview().offset(16)
-        }
-        
-        backButton.snp.remakeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-        
-        backIconImageView.snp.remakeConstraints { make in
-            make.width.equalTo(10)
-            make.height.equalTo(20)
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview()
-        }
-        
-        backLabel.snp.remakeConstraints { make in
-            make.centerY.equalTo(backIconImageView.snp.centerY)
-            make.leading.equalTo(backIconImageView.snp.trailing).offset(8)
-            make.trailing.equalToSuperview()
-        }
-        
         DispatchQueue.main.async {
             self.blurView.setNeedsLayout()
             self.blurView.updateConstraints()

@@ -10,9 +10,7 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   s.source_files = 'Sources/Card-iOS/Logic/**/*.swift'
   s.resources = "Sources/Card-iOS/Resources/**/*.{json,xib,pdf,png,gif,storyboard,xcassets,xcdatamodeld,lproj}"
-  s.dependency'SwiftEntryKit'
   s.dependency'SwiftyRSA'
-  s.dependency'SnapKit'
   s.dependency'SharedDataModels-iOS'
   s.dependency'TapCardScannerWebWrapper-iOS'
   s.dependency'TapFontKit-iOS'

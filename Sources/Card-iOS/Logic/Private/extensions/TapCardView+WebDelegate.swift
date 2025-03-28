@@ -48,9 +48,6 @@ extension TapCardView:WKNavigationDelegate {
         case _ where url.absoluteString.contains("onSuccess"):
             delegate?.onSuccess?(data: tap_extractDataFromUrl(url.absoluteURL))
             break
-        case _ where url.absoluteString.contains("on3dsRedirect"):
-            handleRedirection(data: tap_extractDataFromUrl(url.absoluteURL))
-            break
         case _ where url.absoluteString.contains("onScannerClick"):
             scanCard()
             break
