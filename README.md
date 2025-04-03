@@ -17,17 +17,17 @@ Code changes:
 - Synced with 1.0.3 latest release
 
 # Integration Flow
-
-1. You will have to create a variable of type TapCardView programmatically:
+1. Add SPM dependency: https://github.com/barakatech/baraka-tapPayments-ios
+2. You will have to create a variable of type TapCardView programmatically
   ```swift
   private let tapCardView = TapCardView()
   ```
-2. You need to hide this TapCardView to not appear on screen and add it to your views hierarchy inside a view controller:
+3. You need to hide this TapCardView to not appear on screen and add it to your views hierarchy inside a view controller
   ```swift
   tapCardView.isHidden = true
   view.addSubview(tapCardView)
   ```
-3. Get the debit card infos from your UI
+4. Get the debit card infos from your UI
   ```swift
   struct CardForm {
     let cardHolderName: String
@@ -36,12 +36,12 @@ Code changes:
     let cardCVV: String
   }
   ```
-4. Get Tap Payments parameters
+5. Get Tap Payments parameters
    It should be a dictionnary of type `[String: Any]`.
    It should have the mandatory keys `scope`, `operator`, `purpose`, `order`, `customer` and `merchant`.
    Please refer to the source [documentation](https://developers.tap.company/docs/card-sdk-ios#advanced-integration) to see examples.
    
-5. Conform to Tap Payments delegate and handle success, error and invalid inputs
+6. Conform to Tap Payments delegate and handle success, error and invalid inputs
  ```swift
   extension ViewController: TapCardViewDelegate {
     func onSuccess(data: String) { ... }
@@ -53,7 +53,7 @@ Code changes:
     }
   }
   ```
-6. Call `initTapCardSDK` with debit card infos from step 3 and tap payments parameters from step 4
+7. Call `initTapCardSDK` with debit card infos from step 3 and tap payments parameters from step 4
 ```swift
   let form = debitCardInfos
   let parameters = tapPaymentsParameters
