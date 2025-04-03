@@ -14,6 +14,7 @@ Code changes:
 - Add inside `TapCardView` initializer `initTapCardSDK` two new parameters `cardHolderName` and `cardCVV`
 - `cardCVV` field is sanitized by using `tap_byRemovingAllCharactersExcept `
 - Remove useless SPM dependencies `SnapKit` and `SwiftEntry`
+- Synced with 1.0.3 latest release
 
 # Integration Flow
 
